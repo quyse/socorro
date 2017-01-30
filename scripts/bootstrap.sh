@@ -21,16 +21,8 @@ if [ -n "${SOCORRO_DEVELOPMENT_ENV+1}" ]; then
     ${VIRTUAL_ENV}/bin/python setup.py develop
 fi
 
-if [ "`uname -sm`" == "Linux x86_64" ]; then
-  # pull pre-built, known version of breakpad
-  wget -N --quiet 'https://index.taskcluster.net/v1/task/project.socorro.breakpad.v1.builds.linux64.latest/artifacts/public/breakpad.tar.gz'
-  tar -zxf breakpad.tar.gz
-  rm -rf stackwalk
-  mv breakpad stackwalk
-else
-  # build breakpad from source
-  make breakpad
-fi
+# build breakpad from source
+make breakpad
 # Build JSON stackwalker and friends
 pushd minidump-stackwalk
 make
